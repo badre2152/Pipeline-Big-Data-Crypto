@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
 
 from src.ingestion.ingest_bronze import ingest_bronze
 from src.transformation.transform_silver import transform_silver
@@ -41,8 +40,8 @@ with DAG(
     dag_id="crypto_pipeline_dag",
     description="Pipeline quotidien : CoinGecko → Bronze → Silver → Gold → Snowflake",
     default_args=DEFAULT_ARGS,
-    start_date=days_ago(1),
-    schedule_interval="0 10 * * *",  # tous les jours à 10h00
+    start_date=datetime(2026, 6, 15),
+    schedule_interval="0 11 * * *",  # tous les jours à 11h00
     catchup=False,                   # pas de backfill automatique
     max_active_runs=1,               # une seule exécution à la fois
     tags=["crypto", "pipeline", "daily"],
