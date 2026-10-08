@@ -113,8 +113,8 @@ crypto-pipeline/
 
 ## Key Design Decisions
 
-- **Snowflake Schema** over Star Schema — `dim_category` and `dim_platform` normalized to avoid redundancy. See [ADR 001](docs/decisions/001-snowflake-schema.md).
-- **Hardcoded seed data** for `dim_category` and `dim_platform` — avoids CoinGecko free tier rate limits. Pattern known as "reference data" in production. See [ADR 002](docs/decisions/002-hardcoded-seeds.md).
+- **Snowflake Schema** over Star Schema. `dim_category` and `dim_platform` are normalized to avoid redundancy. See [ADR 001](docs/decisions/1_snowflake_schema.md).
+- **Hardcoded seed data** for `dim_category` and `dim_platform` avoids CoinGecko free tier rate limits. This pattern is known as "reference data" in production. See [ADR 002](docs/decisions/2_hardcoded_seeds.md).
 - **Idempotent loads** — MERGE for dimensions, anti-duplicate check for fact table. Safe to re-run.
 - **Envelope pattern** in Bronze — raw JSON wrapped with `collected_at`, `source`, `count` metadata.
 
