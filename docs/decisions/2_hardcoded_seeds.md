@@ -1,6 +1,6 @@
-# ADR 002 — Hardcoded Seed Data pour dim_category et dim_platform
+# ADR 002 Hardcoded Seed Data pour dim_category et dim_platform
 
-**Date :** 2025-06-09
+**Date :** 2026
 **Statut :** Accepté
 
 ## Contexte
@@ -28,5 +28,5 @@ dans le même fichier pour les top 50 cryptos.
 ## Conséquences
 
 - Mise à jour manuelle si une nouvelle crypto entre dans le top 50
-- Mapping initial couvre les top 50 cryptos par market cap (juin 2025)
+- Mapping initial couvre les top 50 cryptos du périmètre initial du projet
 - `crypto_seeds.py` doit être mis à jour manuellement si nécessaire
