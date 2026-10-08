@@ -45,8 +45,8 @@ dim_category ◄─── dim_crypto ───► dim_platform
 
 ```bash
 # 1. Clone
-git clone https://github.com/your-username/crypto-pipeline.git
-cd crypto-pipeline
+git clone https://github.com/badre2152/Pipeline-Big-Data-Crypto.git
+cd Pipeline-Big-Data-Crypto
 
 # 2. Environment
 cp .env.example .env
