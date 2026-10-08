@@ -1,6 +1,6 @@
-# ADR 001 — Choix du Snowflake Schema
+# ADR 001 Choix du Snowflake Schema
 
-**Date :** 2025-06-09
+**Date :** 2026
 **Statut :** Accepté
 
 ## Contexte
