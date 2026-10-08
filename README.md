@@ -50,13 +50,13 @@ cd Pipeline-Big-Data-Crypto
 
 # 2. Environment
 cp .env.example .env
-# Fill in MinIO and Snowflake credentials
+# Replace all change_me values and fill in Snowflake credentials
 
 # 3. Install dependencies
 pip install -r requirements-dev.txt
 
 # 4. Start MinIO + Airflow
-docker-compose up -d
+docker compose up -d
 
 # 5. Run pipeline manually
 python -m src.pipeline
@@ -135,9 +135,13 @@ See `.env.example` for the full list. Required variables:
 
 ```
 MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_SECURE
+AIRFLOW_DB_USER, AIRFLOW_DB_PASSWORD, AIRFLOW_DB_NAME
+AIRFLOW_ADMIN_USER, AIRFLOW_ADMIN_PASSWORD, AIRFLOW_ADMIN_EMAIL
+AIRFLOW_WEBSERVER_SECRET_KEY
 SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD
 SNOWFLAKE_DATABASE, SNOWFLAKE_SCHEMA, SNOWFLAKE_WAREHOUSE
 
 Optional:
+AIRFLOW_FERNET_KEY
 COINGECKO_API_KEY
 ```
