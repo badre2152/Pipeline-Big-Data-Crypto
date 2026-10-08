@@ -6,7 +6,7 @@ Utile en développement, tests, et démonstration.
 
 Usage :
     python -m src.pipeline                        # run pour aujourd'hui
-    python -m src.pipeline --date 2025-01-15      # run pour une date précise
+    python -m src.pipeline --date 2026-06-15      # run pour une date précise
 """
 
 from __future__ import annotations
