@@ -84,7 +84,6 @@ crypto-pipeline/
 │   ├── dags/               # Airflow DAG
 │   ├── utils/              # Shared utilities
 │   └── config.py           # Centralized environment config
-├── tests/                  # Mirrors src/ structure
 ├── docs/
 │   └── decisions/          # Architecture Decision Records (ADRs)
 ├── notebook/               # Exploration and validation
@@ -117,15 +116,6 @@ crypto-pipeline/
 - **Hardcoded seed data** for `dim_category` and `dim_platform` avoids CoinGecko free tier rate limits. This pattern is known as "reference data" in production. See [ADR 002](docs/decisions/2_hardcoded_seeds.md).
 - **Idempotent loads** — MERGE for dimensions, anti-duplicate check for fact table. Safe to re-run.
 - **Envelope pattern** in Bronze — raw JSON wrapped with `collected_at`, `source`, `count` metadata.
-
----
-
-## Running Tests
-
-```bash
-pytest
-pytest --cov=src tests/
-```
 
 ---
 
