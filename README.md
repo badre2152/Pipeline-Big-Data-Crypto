@@ -1,8 +1,7 @@
 # Crypto Data Pipeline
 
-End-to-end data pipeline for cryptocurrency market data — from CoinGecko API ingestion to Tableau dashboards, built on a Medallion architecture with a Snowflake Schema dimensional model.
+End to end data pipeline for cryptocurrency market data from CoinGecko API ingestion to Tableau dashboards, built on a Medallion architecture with Snowflake Cloud as the warehouse and a Snowflake Schema dimensional model.
 
----
 
 ## Architecture
 
@@ -18,7 +17,7 @@ CoinGecko API
 └─────────────────────────────────────┘
       │ Parquet
       ▼
-  Snowflake  (Data Warehouse)
+  Snowflake Cloud  (Data Warehouse)
       │ ODBC
       ▼
    Tableau  (Dashboards)
@@ -26,7 +25,7 @@ CoinGecko API
 Orchestration : Apache Airflow (daily at 06:00 UTC)
 ```
 
-## Data Model — Snowflake Schema
+## Data Model: Snowflake Schema
 
 ```
 dim_category ◄─── dim_crypto ───► dim_platform
@@ -36,10 +35,9 @@ dim_category ◄─── dim_crypto ───► dim_platform
                   dim_date
 ```
 
-**fact_crypto_prices** — grain: one row per crypto per day
+**fact_crypto_prices** grain: one row per crypto per day
 `current_price`, `high_24h`, `low_24h`, `price_change_24h`, `price_change_pct_24h`, `total_volume`, `market_cap`, `market_cap_rank`
 
----
 
 ## Quick Start
 
@@ -50,7 +48,7 @@ cd Pipeline-Big-Data-Crypto
 
 # 2. Environment
 cp .env.example .env
-# Replace all change_me values and fill in Snowflake credentials
+# Replace all change_me values and fill in Snowflake Cloud credentials
 
 # 3. Install dependencies
 pip install -r requirements-dev.txt
@@ -68,18 +66,17 @@ python -m src.pipeline --date 2026-06-15
 python -m src.pipeline --steps bronze silver
 ```
 
----
 
 ## Project Structure
 
 ```
 crypto-pipeline/
 ├── src/
-│   ├── ingestion/          # Étape 1 — CoinGecko → MinIO Bronze
-│   ├── transformation/     # Étape 2 — Bronze → Silver (Parquet)
-│   ├── modeling/           # Étape 3 — Silver → Gold (dimensional model)
-│   ├── loading/            # Étape 4 — Gold → Snowflake
-│   ├── clients/            # MinIO + Snowflake connection wrappers
+│   ├── ingestion/          # Étape 1: CoinGecko → MinIO Bronze
+│   ├── transformation/     # Étape 2: Bronze → Silver (Parquet)
+│   ├── modeling/           # Étape 3: Silver → Gold (dimensional model)
+│   ├── loading/            # Étape 4: Gold → Snowflake Cloud
+│   ├── clients/            # MinIO + Snowflake Cloud connection wrappers
 │   ├── seeds/              # Reference data (dim_category, dim_platform)
 │   ├── dags/               # Airflow DAG
 │   ├── utils/              # Shared utilities
@@ -95,29 +92,26 @@ crypto-pipeline/
 └── CHANGELOG.md
 ```
 
----
 
 ## Stack
 
 | Layer | Tool |
 |-------|------|
 | Source | CoinGecko API (free tier) |
-| Data Lake | MinIO (S3-compatible) |
+| Data Lake | MinIO (S3 compatible) |
 | Transformation | Python, Pandas, PyArrow |
 | Orchestration | Apache Airflow |
-| Data Warehouse | Snowflake |
+| Data Warehouse | Snowflake Cloud |
 | BI | Tableau |
 
----
 
 ## Key Design Decisions
 
-- **Snowflake Schema** over Star Schema. `dim_category` and `dim_platform` are normalized to avoid redundancy. See [ADR 001](docs/decisions/1_snowflake_schema.md).
-- **Hardcoded seed data** for `dim_category` and `dim_platform` avoids CoinGecko free tier rate limits. This pattern is known as "reference data" in production. See [ADR 002](docs/decisions/2_hardcoded_seeds.md).
-- **Idempotent loads** — MERGE for dimensions, anti-duplicate check for fact table. Safe to re-run.
-- **Envelope pattern** in Bronze — raw JSON wrapped with `collected_at`, `source`, `count` metadata.
+* **Snowflake Schema** over Star Schema. `dim_category` and `dim_platform` are normalized to avoid redundancy. See [ADR 001](docs/decisions/1_snowflake_schema.md).
+* **Hardcoded seed data** for `dim_category` and `dim_platform` avoids CoinGecko free tier rate limits. This pattern is known as "reference data" in production. See [ADR 002](docs/decisions/2_hardcoded_seeds.md).
+* **Idempotent loads** use MERGE for dimensions and a duplicate prevention check for the fact table. Safe to rerun.
+* **Envelope pattern** in Bronze wraps raw JSON with `collected_at`, `source`, `count` metadata.
 
----
 
 ## Environment Variables
 
