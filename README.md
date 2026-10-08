@@ -62,7 +62,7 @@ docker-compose up -d
 python -m src.pipeline
 
 # Run for a specific date
-python -m src.pipeline --date 2025-01-15
+python -m src.pipeline --date 2026-06-15
 
 # Run specific steps only
 python -m src.pipeline --steps bronze silver
