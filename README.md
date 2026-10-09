@@ -45,12 +45,12 @@ dim_category ◄─── dim_crypto ───► dim_platform
 
 ```bash
 # 1. Clone
-git clone https://github.com/your-username/crypto-pipeline.git
-cd crypto-pipeline
+git clone https://github.com/badre2152/Pipeline-Big-Data-Crypto.git
+cd Pipeline-Big-Data-Crypto
 
 # 2. Environment
-cp .env.example .env
-# Fill in MinIO and Snowflake credentials
+Create a local .env file using the required environment variables listed below.
+# Never commit credentials
 
 # 3. Install dependencies
 pip install -r requirements-dev.txt
@@ -84,11 +84,9 @@ crypto-pipeline/
 │   ├── dags/               # Airflow DAG
 │   ├── utils/              # Shared utilities
 │   └── config.py           # Centralized environment config
-├── tests/                  # Mirrors src/ structure
 ├── docs/
 │   └── decisions/          # Architecture Decision Records (ADRs)
 ├── notebook/               # Exploration and validation
-├── .env.example
 ├── docker-compose.yml
 ├── requirements.txt
 ├── requirements-dev.txt
@@ -123,15 +121,14 @@ crypto-pipeline/
 ## Running Tests
 
 ```bash
-pytest
-pytest --cov=src tests/
+No tracked test suite is currently included in this repository.
 ```
 
 ---
 
 ## Environment Variables
 
-See `.env.example` for the full list. Required variables:
+The repository does not currently include an `.env.example` file. Required variables documented here:
 
 ```
 MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY
