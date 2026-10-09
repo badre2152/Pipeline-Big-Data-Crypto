@@ -117,11 +117,9 @@ crypto-pipeline/
 
 ---
 
-## Running Tests
+## Tests
 
-```bash
 No tracked test suite is currently included in this repository.
-```
 
 ---
 
