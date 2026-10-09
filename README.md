@@ -49,8 +49,7 @@ git clone https://github.com/badre2152/Pipeline-Big-Data-Crypto.git
 cd Pipeline-Big-Data-Crypto
 
 # 2. Environment
-Create a local .env file using the required environment variables listed below.
-# Never commit credentials
+touch .env
 
 # 3. Install dependencies
 pip install -r requirements-dev.txt
