@@ -21,7 +21,7 @@ from src.modeling.build_gold import build_gold
 from src.loading.load_snowflake import load_snowflake
 
 
-# ─── ARGUMENTS PAR DÉFAUT ────────────────────────────────────────────────────
+# ARGUMENTS PAR DÉFAUT
 
 DEFAULT_ARGS = {
     "owner":            "crypto-pipeline",
@@ -34,7 +34,7 @@ DEFAULT_ARGS = {
 }
 
 
-# ─── DAG ─────────────────────────────────────────────────────────────────────
+# DAG
 
 with DAG(
     dag_id="crypto_pipeline_dag",
@@ -48,7 +48,7 @@ with DAG(
 ) as dag:
 
 
-    # ── TASK 1 — Bronze ───────────────────────────────────────────────────────
+    # TASK 1 — Bronze
     task_ingest_bronze = PythonOperator(
         task_id="ingest_bronze",
         python_callable=ingest_bronze,
@@ -61,7 +61,7 @@ with DAG(
     )
 
 
-    # ── TASK 2 — Silver ───────────────────────────────────────────────────────
+    # TASK 2 — Silver
     task_transform_silver = PythonOperator(
         task_id="transform_silver",
         python_callable=transform_silver,
@@ -74,7 +74,7 @@ with DAG(
     )
 
 
-    # ── TASK 3 — Gold ─────────────────────────────────────────────────────────
+    # TASK 3 — Gold
     task_build_gold = PythonOperator(
         task_id="build_gold_model",
         python_callable=build_gold,
@@ -87,7 +87,7 @@ with DAG(
     )
 
 
-    # ── TASK 4 — Snowflake ────────────────────────────────────────────────────
+    # TASK 4 — Snowflake
     task_load_snowflake = PythonOperator(
         task_id="load_snowflake",
         python_callable=load_snowflake,
@@ -100,5 +100,5 @@ with DAG(
     )
 
 
-    # ── DÉPENDANCES ───────────────────────────────────────────────────────────
+    # DÉPENDANCES
     task_ingest_bronze >> task_transform_silver >> task_build_gold >> task_load_snowflake
