@@ -36,7 +36,7 @@ PLATFORMS = [
 
 # Mapping coin_id (CoinGecko) → category_key + platform_key
 CRYPTO_MAPPING = {
-    # ── Layer 1 ───────────────────────────────────────────────
+    # Layer 1
     "bitcoin":           {"category_key": 1, "platform_key": 1},
     "ethereum":          {"category_key": 1, "platform_key": 2},
     "solana":            {"category_key": 1, "platform_key": 3},
@@ -53,21 +53,21 @@ CRYPTO_MAPPING = {
     "stellar":           {"category_key": 1, "platform_key": 9},
     "monero":            {"category_key": 1, "platform_key": 9},
 
-    # ── Layer 2 ───────────────────────────────────────────────
+    # Layer 2
     "matic-network":     {"category_key": 2, "platform_key": 2},
     "arbitrum":          {"category_key": 2, "platform_key": 2},
     "optimism":          {"category_key": 2, "platform_key": 2},
     "starknet":          {"category_key": 2, "platform_key": 2},
     "immutable-x":       {"category_key": 2, "platform_key": 2},
 
-    # ── Stablecoins ───────────────────────────────────────────
+    # Stablecoins
     "tether":            {"category_key": 4, "platform_key": 2},
     "usd-coin":          {"category_key": 4, "platform_key": 2},
     "dai":               {"category_key": 4, "platform_key": 2},
     "true-usd":          {"category_key": 4, "platform_key": 2},
     "binance-usd":       {"category_key": 4, "platform_key": 4},
 
-    # ── DeFi ─────────────────────────────────────────────────
+    # DeFi
     "uniswap":           {"category_key": 3, "platform_key": 2},
     "aave":              {"category_key": 3, "platform_key": 2},
     "curve-dao-token":   {"category_key": 3, "platform_key": 2},
@@ -75,22 +75,22 @@ CRYPTO_MAPPING = {
     "lido-dao":          {"category_key": 3, "platform_key": 2},
     "pancakeswap-token": {"category_key": 3, "platform_key": 4},
 
-    # ── Oracle ────────────────────────────────────────────────
+    # Oracle
     "chainlink":         {"category_key": 5, "platform_key": 2},
     "the-graph":         {"category_key": 5, "platform_key": 2},
 
-    # ── Exchange ──────────────────────────────────────────────
+    # Exchange
     "binancecoin":       {"category_key": 6, "platform_key": 4},
     "crypto-com-chain":  {"category_key": 6, "platform_key": 9},
     "okb":               {"category_key": 6, "platform_key": 9},
     "kucoin-shares":     {"category_key": 6, "platform_key": 9},
 
-    # ── Meme ─────────────────────────────────────────────────
+    # Meme
     "dogecoin":          {"category_key": 7, "platform_key": 9},
     "shiba-inu":         {"category_key": 7, "platform_key": 2},
     "pepe":              {"category_key": 7, "platform_key": 2},
 
-    # ── Other ─────────────────────────────────────────────────
+    # Other
     "ripple":            {"category_key": 8, "platform_key": 9},
     "litecoin":          {"category_key": 8, "platform_key": 9},
     "bitcoin-cash":      {"category_key": 8, "platform_key": 9},
