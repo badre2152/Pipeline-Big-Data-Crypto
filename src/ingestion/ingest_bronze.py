@@ -13,7 +13,7 @@ from src.utils.logger import get_logger
 logger = get_logger(__name__)
 
 
-# ─── API ────────────────────────────────────────────────────────────────────
+# API
 
 def validate_market_snapshot(data: object) -> list[dict]:
     if not isinstance(data, list) or not data:
@@ -75,7 +75,7 @@ def fetch_top_cryptos() -> list[dict]:
     raise RuntimeError(f"Failed to fetch CoinGecko data after {CoinGeckoConfig.MAX_RETRIES} attempts.")
 
 
-# ─── MINIO ──────────────────────────────────────────────────────────────────
+# MINIO
 
 def build_bronze_key(collected_at: datetime) -> str:
     return collected_at.strftime("%Y/%m/%d/raw.json")
@@ -108,7 +108,7 @@ def save_to_bronze(data: list[dict], collected_at: datetime) -> str:
     return key
 
 
-# ─── ENTRYPOINT ─────────────────────────────────────────────────────────────
+# ENTRYPOINT
 
 def ingest_bronze() -> str:
     collected_at = datetime.now(timezone.utc)

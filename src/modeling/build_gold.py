@@ -13,7 +13,7 @@ from src.seeds.crypto_seeds import CATEGORIES, PLATFORMS, get_mapping
 logger = get_logger(__name__)
 
 
-# ─── LECTURE SILVER ──────────────────────────────────────────────────────────
+# LECTURE SILVER
 
 def read_silver(client, date: datetime) -> pd.DataFrame:
     """
@@ -32,7 +32,7 @@ def read_silver(client, date: datetime) -> pd.DataFrame:
         raise FileNotFoundError(f"Silver file not found: s3://{MinioConfig.SILVER}/{key}")
 
 
-# ─── DIMENSIONS ──────────────────────────────────────────────────────────────
+# DIMENSIONS
 
 def build_dim_category() -> pd.DataFrame:
     """
@@ -101,7 +101,7 @@ def build_dim_date(dates: pd.Series) -> pd.DataFrame:
     return df
 
 
-# ─── TABLE DE FAITS ──────────────────────────────────────────────────────────
+# TABLE DE FAITS
 
 def build_fact_crypto_prices(
     df_silver: pd.DataFrame,
@@ -115,7 +115,7 @@ def build_fact_crypto_prices(
     """
     fact = df_silver.copy()
 
-    # ── Résolution crypto_key ─────────────────────────────────────────────
+    # Résolution crypto_key
     crypto_lookup = dim_crypto[["coin_id", "crypto_key", "category_key", "platform_key"]]
     fact = fact.merge(crypto_lookup, on="coin_id", how="left")
 
@@ -124,7 +124,7 @@ def build_fact_crypto_prices(
         logger.warning(f"{unresolved_crypto} rows with unresolved crypto_key — dropping.")
         fact.dropna(subset=["crypto_key"], inplace=True)
 
-    # ── Résolution date_key ───────────────────────────────────────────────
+    # Résolution date_key
     fact["date_key"] = fact["collected_at"].dt.strftime("%Y%m%d").astype(int)
 
     valid_date_keys = set(dim_date["date_key"].tolist())
@@ -132,7 +132,7 @@ def build_fact_crypto_prices(
     if unresolved_date > 0:
         raise ValueError(f"{unresolved_date} rows with date_key not in dim_date.")
 
-    # ── Sélection et ordre final ──────────────────────────────────────────
+    # Sélection et ordre final
     fact = fact[[
         "crypto_key",
         "date_key",
@@ -161,7 +161,7 @@ def build_fact_crypto_prices(
     return fact
 
 
-# ─── VALIDATION INTÉGRITÉ RÉFÉRENTIELLE ─────────────────────────────────────
+# VALIDATION INTÉGRITÉ RÉFÉRENTIELLE
 
 def validate_referential_integrity(
     fact: pd.DataFrame,
@@ -189,7 +189,7 @@ def validate_referential_integrity(
     logger.info("Referential integrity validation passed.")
 
 
-# ─── SAUVEGARDE GOLD ─────────────────────────────────────────────────────────
+# SAUVEGARDE GOLD
 
 def save_to_gold(client, df: pd.DataFrame, table_name: str, date: datetime) -> str:
     """
@@ -214,7 +214,7 @@ def save_to_gold(client, df: pd.DataFrame, table_name: str, date: datetime) -> s
     return key
 
 
-# ─── ENTRYPOINT ──────────────────────────────────────────────────────────────
+# ENTRYPOINT
 
 def build_gold(date: datetime = None) -> dict[str, str]:
     """
