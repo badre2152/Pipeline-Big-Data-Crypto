@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-# ─── DDL — CRÉATION DU SCHÉMA ────────────────────────────────────────────────
+# DDL — CRÉATION DU SCHÉMA
 
 DDL_STATEMENTS = [
 
@@ -78,7 +78,7 @@ DDL_STATEMENTS = [
 ]
 
 
-# ─── LECTURE GOLD ────────────────────────────────────────────────────────────
+# LECTURE GOLD
 
 def read_gold_table(client, table_name: str, date: datetime) -> pd.DataFrame:
     """
@@ -98,7 +98,7 @@ def read_gold_table(client, table_name: str, date: datetime) -> pd.DataFrame:
         raise FileNotFoundError(f"Gold file not found: s3://{MinioConfig.GOLD}/{key}")
 
 
-# ─── CRÉATION DU SCHÉMA ──────────────────────────────────────────────────────
+# CRÉATION DU SCHÉMA
 
 def create_schema(conn) -> None:
     """
@@ -113,7 +113,7 @@ def create_schema(conn) -> None:
     logger.info("Schema created successfully.")
 
 
-# ─── CHARGEMENT DES TABLES ───────────────────────────────────────────────────
+# CHARGEMENT DES TABLES
 
 def upsert_dim_category(conn, df: pd.DataFrame) -> None:
     """
@@ -272,7 +272,7 @@ def insert_fact(conn, df: pd.DataFrame) -> None:
     logger.info(f"fact_crypto_prices: {len(data)} rows inserted.")
 
 
-# ─── VALIDATION POST-LOAD ────────────────────────────────────────────────────
+# VALIDATION POST-LOAD
 
 def validate_load(conn, date: datetime) -> None:
     """
@@ -292,7 +292,7 @@ def validate_load(conn, date: datetime) -> None:
     logger.info(f"Validation passed: {count} rows in fact_crypto_prices for date_key={date_key}.")
 
 
-# ─── ENTRYPOINT ──────────────────────────────────────────────────────────────
+# ENTRYPOINT
 
 def load_snowflake(date: datetime = None) -> None:
     """
