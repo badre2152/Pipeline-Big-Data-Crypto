@@ -15,6 +15,17 @@ logger = get_logger(__name__)
 
 # ─── API ────────────────────────────────────────────────────────────────────
 
+def validate_market_snapshot(data: object) -> list[dict]:
+    if not isinstance(data, list) or not data:
+        raise ValueError("CoinGecko returned an empty or invalid market snapshot")
+    if any(not isinstance(coin, dict) or not coin.get("id") for coin in data):
+        raise ValueError("CoinGecko market snapshot contains a missing coin identifier")
+    ids = [coin["id"] for coin in data]
+    if len(ids) != len(set(ids)):
+        raise ValueError("CoinGecko market snapshot contains duplicate coin identifiers")
+    return data
+
+
 def fetch_top_cryptos() -> list[dict]:
     url = f"{CoinGeckoConfig.BASE_URL}/coins/markets"
     params = {
@@ -38,7 +49,7 @@ def fetch_top_cryptos() -> list[dict]:
                 timeout=CoinGeckoConfig.TIMEOUT,
             )
             response.raise_for_status()
-            data = response.json()
+            data = validate_market_snapshot(response.json())
             logger.info(f"Fetched {len(data)} cryptos successfully.")
             return data
 
@@ -71,6 +82,7 @@ def build_bronze_key(collected_at: datetime) -> str:
 
 
 def save_to_bronze(data: list[dict], collected_at: datetime) -> str:
+    data = validate_market_snapshot(data)
     client = get_minio_client()
     ensure_bucket_exists(client, MinioConfig.BRONZE)
 
