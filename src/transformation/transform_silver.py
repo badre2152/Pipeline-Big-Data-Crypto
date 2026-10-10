@@ -13,7 +13,7 @@ from src.utils.logger import get_logger
 logger = get_logger(__name__)
 
 
-# ─── COLONNES ATTENDUES ──────────────────────────────────────────────────────
+# COLONNES ATTENDUES
 
 EXPECTED_COLUMNS = [
     "id", "symbol", "name",
@@ -36,7 +36,7 @@ NUMERIC_COLUMNS = [
 ]
 
 
-# ─── LECTURE BRONZE ──────────────────────────────────────────────────────────
+# LECTURE BRONZE
 
 def read_bronze(client, date: datetime) -> list[dict]:
     key = date.strftime("%Y/%m/%d/raw.json")
@@ -50,7 +50,7 @@ def read_bronze(client, date: datetime) -> list[dict]:
         raise FileNotFoundError(f"Bronze file not found: s3://{MinioConfig.BRONZE}/{key}")
 
 
-# ─── NETTOYAGE ───────────────────────────────────────────────────────────────
+# NETTOYAGE
 
 def clean(data: list[dict]) -> pd.DataFrame:
     df = pd.DataFrame(data)
@@ -79,7 +79,7 @@ def clean(data: list[dict]) -> pd.DataFrame:
     return df
 
 
-# ─── VALIDATION ──────────────────────────────────────────────────────────────
+# VALIDATION
 
 def validate_silver(df: pd.DataFrame) -> None:
     if len(df) == 0:
@@ -95,7 +95,7 @@ def validate_silver(df: pd.DataFrame) -> None:
     logger.info("Silver validation passed.")
 
 
-# ─── SAUVEGARDE SILVER ───────────────────────────────────────────────────────
+# SAUVEGARDE SILVER
 
 def save_to_silver(client, df: pd.DataFrame, date: datetime) -> str:
     ensure_bucket_exists(client, MinioConfig.SILVER)
@@ -116,7 +116,7 @@ def save_to_silver(client, df: pd.DataFrame, date: datetime) -> str:
     return key
 
 
-# ─── ENTRYPOINT ──────────────────────────────────────────────────────────────
+# ENTRYPOINT
 
 def transform_silver(date: datetime = None) -> str:
     if date is None:
